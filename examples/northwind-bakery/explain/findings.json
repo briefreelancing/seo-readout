@@ -1,0 +1,1077 @@
+{
+  "tool": "readout-change-explainer",
+  "client": "Northwind Bakery",
+  "generated": "2026-11-01",
+  "focus_metric": {
+    "id": "gsc_clicks",
+    "label": "Search Console clicks",
+    "source": "Search Console"
+  },
+  "periods": {
+    "current": {
+      "label": "current",
+      "start": "2026-09-28",
+      "end": "2026-10-25",
+      "days": 28
+    },
+    "previous": {
+      "label": "previous",
+      "start": "2026-08-31",
+      "end": "2026-09-27",
+      "days": 28
+    },
+    "year_ago": {
+      "label": "year_ago",
+      "start": "2025-09-29",
+      "end": "2025-10-26",
+      "days": 28
+    }
+  },
+  "sources": [
+    {
+      "file": "ga4_daily_channels.csv",
+      "detected_as": "GA4",
+      "rows": 3856,
+      "total_rows_removed": 0
+    },
+    {
+      "file": "google_ads_campaigns_daily.csv",
+      "detected_as": "Google Ads",
+      "rows": 1446,
+      "total_rows_removed": 1
+    },
+    {
+      "file": "Dates.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (dates)",
+      "rows": 482
+    },
+    {
+      "file": "Queries.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (query)",
+      "rows": 12
+    },
+    {
+      "file": "Pages.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (page)",
+      "rows": 8
+    },
+    {
+      "file": "Countries.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (country)",
+      "rows": 4
+    },
+    {
+      "file": "Devices.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (device)",
+      "rows": 3
+    },
+    {
+      "file": "Search appearance.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (search_appearance)",
+      "rows": 0
+    },
+    {
+      "file": "Dates.csv",
+      "bundle": "gsc_current_28_days.zip",
+      "detected_as": "Search Console (dates)",
+      "rows": 28
+    },
+    {
+      "file": "Queries.csv",
+      "bundle": "gsc_current_28_days.zip",
+      "detected_as": "Search Console (query)",
+      "rows": 12
+    },
+    {
+      "file": "Pages.csv",
+      "bundle": "gsc_current_28_days.zip",
+      "detected_as": "Search Console (page)",
+      "rows": 8
+    },
+    {
+      "file": "Countries.csv",
+      "bundle": "gsc_current_28_days.zip",
+      "detected_as": "Search Console (country)",
+      "rows": 4
+    },
+    {
+      "file": "Devices.csv",
+      "bundle": "gsc_current_28_days.zip",
+      "detected_as": "Search Console (device)",
+      "rows": 3
+    },
+    {
+      "file": "Search appearance.csv",
+      "bundle": "gsc_current_28_days.zip",
+      "detected_as": "Search Console (search_appearance)",
+      "rows": 0
+    },
+    {
+      "file": "Dates.csv",
+      "bundle": "gsc_previous_28_days.zip",
+      "detected_as": "Search Console (dates)",
+      "rows": 28
+    },
+    {
+      "file": "Queries.csv",
+      "bundle": "gsc_previous_28_days.zip",
+      "detected_as": "Search Console (query)",
+      "rows": 12
+    },
+    {
+      "file": "Pages.csv",
+      "bundle": "gsc_previous_28_days.zip",
+      "detected_as": "Search Console (page)",
+      "rows": 8
+    },
+    {
+      "file": "Countries.csv",
+      "bundle": "gsc_previous_28_days.zip",
+      "detected_as": "Search Console (country)",
+      "rows": 4
+    },
+    {
+      "file": "Devices.csv",
+      "bundle": "gsc_previous_28_days.zip",
+      "detected_as": "Search Console (device)",
+      "rows": 3
+    },
+    {
+      "file": "Search appearance.csv",
+      "bundle": "gsc_previous_28_days.zip",
+      "detected_as": "Search Console (search_appearance)",
+      "rows": 0
+    }
+  ],
+  "data_health": [
+    {
+      "check": "near_zero_days",
+      "status": "warning",
+      "message": "GA4: 1 day(s) with sessions under 10% of the usual daily level (2026-10-12). This often means a tracking or export problem, not a real drop.",
+      "details": {
+        "system": "ga4",
+        "days": [
+          "2026-10-12"
+        ]
+      }
+    },
+    {
+      "check": "time_zones",
+      "status": "info",
+      "message": "Search Console reports dates in Pacific Time. GA4 and Google Ads use each account's own time zone, so single days can differ slightly between sources.",
+      "details": {}
+    },
+    {
+      "check": "file_note",
+      "status": "info",
+      "message": "Combined 3 Search Console exports; overlapping dates were counted once.",
+      "details": {}
+    }
+  ],
+  "headline_numbers": [
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "metric": "sessions",
+      "current": 20152.0,
+      "previous": 27525.0,
+      "change_pct": -26.8,
+      "year_ago": 25919.0,
+      "yoy_pct": -22.3
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "metric": "users",
+      "current": 16533.0,
+      "previous": 22571.0,
+      "change_pct": -26.8,
+      "year_ago": 21252.0,
+      "yoy_pct": -22.2
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "metric": "conversions",
+      "current": 546.0,
+      "previous": 675.0,
+      "change_pct": -19.1,
+      "year_ago": 632.0,
+      "yoy_pct": -13.6
+    },
+    {
+      "system": "Search Console",
+      "system_id": "gsc",
+      "metric": "clicks",
+      "current": 10434.0,
+      "previous": 16971.0,
+      "change_pct": -38.5,
+      "year_ago": 15811.0,
+      "yoy_pct": -34.0
+    },
+    {
+      "system": "Search Console",
+      "system_id": "gsc",
+      "metric": "impressions",
+      "current": 156673.0,
+      "previous": 179201.0,
+      "change_pct": -12.6,
+      "year_ago": 168551.0,
+      "yoy_pct": -7.0
+    },
+    {
+      "system": "Search Console",
+      "system_id": "gsc",
+      "metric": "ctr_pct",
+      "current": 6.66,
+      "previous": 9.47,
+      "change_pct": -29.7,
+      "year_ago": null,
+      "yoy_pct": null
+    },
+    {
+      "system": "Search Console",
+      "system_id": "gsc",
+      "metric": "avg_position",
+      "current": 7.3,
+      "previous": 5.7,
+      "change_pct": null,
+      "change_abs": 1.6,
+      "year_ago": 5.7,
+      "yoy_pct": null
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "metric": "impressions",
+      "current": 196117.0,
+      "previous": 207025.0,
+      "change_pct": -5.3,
+      "year_ago": 200551.0,
+      "yoy_pct": -2.2
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "metric": "clicks",
+      "current": 4886.0,
+      "previous": 5051.0,
+      "change_pct": -3.3,
+      "year_ago": 4911.0,
+      "yoy_pct": -0.5
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "metric": "spend",
+      "current": 5084.76,
+      "previous": 5361.32,
+      "change_pct": -5.2,
+      "year_ago": 5127.07,
+      "yoy_pct": -0.8
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "metric": "conversions",
+      "current": 205.27,
+      "previous": 209.15,
+      "change_pct": -1.9,
+      "year_ago": 199.42,
+      "yoy_pct": 2.9
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "metric": "avg_cpc",
+      "current": 1.04,
+      "previous": 1.06,
+      "change_pct": -2.0,
+      "year_ago": null,
+      "yoy_pct": null
+    }
+  ],
+  "q1_is_it_real": {
+    "verdict": "likely_real",
+    "verdict_text": "The change appears in more than one tool and no tracking problems were found, so it is probably real. Separately, other sources have tracking issues (see checks); they do not affect Search Console clicks, but they do affect any numbers taken from those sources.",
+    "checks": [
+      {
+        "id": "ga4_near_zero_days",
+        "status": "flag",
+        "message": "GA4 has 1 day(s) far below normal in the analysis window.",
+        "days": [
+          {
+            "date": "2026-10-12",
+            "value": 20,
+            "usual": 854,
+            "missing_estimate": 834
+          }
+        ]
+      },
+      {
+        "id": "ga4_all_channels_dropped",
+        "status": "flag",
+        "message": "Every GA4 channel dropped on the same day, which usually points to tracking rather than real demand.",
+        "days": [
+          {
+            "date": "2026-10-12",
+            "channels_dropped": 6,
+            "channels_checked": 6
+          }
+        ]
+      },
+      {
+        "id": "ratio_organic",
+        "status": "pass",
+        "message": "GA4 organic sessions from Google for every one of the Search Console clicks moved from 0.859 to 0.826 (-3.8%). The ratio is stable, so both tools see the same change.",
+        "ratio_previous": 0.859,
+        "ratio_current": 0.826,
+        "ratio_change_pct": -3.8
+      },
+      {
+        "id": "ratio_paid_search",
+        "status": "pass",
+        "message": "GA4 Paid Search sessions for every one of the Google Ads clicks (Search campaigns) moved from 0.907 to 0.865 (-4.6%). The ratio is stable, so both tools see the same change.",
+        "ratio_previous": 0.907,
+        "ratio_current": 0.865,
+        "ratio_change_pct": -4.6
+      }
+    ],
+    "tracking_gap_effect": null
+  },
+  "q2_is_it_unusual": {
+    "metric": "Search Console clicks",
+    "current": 10434.0,
+    "previous": 16971.0,
+    "year_ago": 15811.0,
+    "change_pct": -38.5,
+    "yoy_pct": -34.0,
+    "last_year_same_periods_change_pct": -6.7,
+    "matches_last_year_pattern": false,
+    "typical_change_range_pct": [
+      -5.6,
+      5.8
+    ],
+    "history_windows": 57,
+    "z_score": -8.7,
+    "label": "unusual"
+  },
+  "q3_where": {
+    "breakdowns": {
+      "ga4_channel": {
+        "net_change": -7373.0,
+        "top_declines": [
+          {
+            "channel": "Organic Search",
+            "sessions_previous": 15763.0,
+            "sessions_current": 9315.0,
+            "change": -6448.0,
+            "change_pct": -40.9,
+            "share_of_net_change_pct": 87.5
+          },
+          {
+            "channel": "Direct",
+            "sessions_previous": 4114.0,
+            "sessions_current": 3716.0,
+            "change": -398.0,
+            "change_pct": -9.7,
+            "share_of_net_change_pct": 5.4
+          },
+          {
+            "channel": "Paid Search",
+            "sessions_previous": 2965.0,
+            "sessions_current": 2716.0,
+            "change": -249.0,
+            "change_pct": -8.4,
+            "share_of_net_change_pct": 3.4
+          },
+          {
+            "channel": "Organic Social",
+            "sessions_previous": 1350.0,
+            "sessions_current": 1202.0,
+            "change": -148.0,
+            "change_pct": -11.0,
+            "share_of_net_change_pct": 2.0
+          },
+          {
+            "channel": "Cross-network",
+            "sessions_previous": 1467.0,
+            "sessions_current": 1358.0,
+            "change": -109.0,
+            "change_pct": -7.4,
+            "share_of_net_change_pct": 1.5
+          },
+          {
+            "channel": "Referral",
+            "sessions_previous": 989.0,
+            "sessions_current": 952.0,
+            "change": -37.0,
+            "change_pct": -3.7,
+            "share_of_net_change_pct": 0.5
+          }
+        ],
+        "top_gains": [
+          {
+            "channel": "Email",
+            "sessions_previous": 877.0,
+            "sessions_current": 893.0,
+            "change": 16.0,
+            "change_pct": 1.8,
+            "share_of_net_change_pct": -0.2
+          }
+        ],
+        "top3_share_of_all_declines_pct": 96.0,
+        "items_compared": 7,
+        "new_items": 0,
+        "lost_items": 0,
+        "metric": "GA4 sessions"
+      },
+      "ads_campaign": {
+        "net_change": -165.0,
+        "top_declines": [
+          {
+            "campaign": "Custom Cakes - Search",
+            "clicks_previous": 1992.0,
+            "clicks_current": 1864.0,
+            "change": -128.0,
+            "change_pct": -6.4,
+            "share_of_net_change_pct": 77.6
+          },
+          {
+            "campaign": "PMax - Local",
+            "clicks_previous": 1783.0,
+            "clicks_current": 1745.0,
+            "change": -38.0,
+            "change_pct": -2.1,
+            "share_of_net_change_pct": 23.0
+          }
+        ],
+        "top_gains": [
+          {
+            "campaign": "Brand - Search",
+            "clicks_previous": 1276.0,
+            "clicks_current": 1277.0,
+            "change": 1.0,
+            "change_pct": 0.1,
+            "share_of_net_change_pct": -0.6
+          }
+        ],
+        "top3_share_of_all_declines_pct": 100.0,
+        "items_compared": 3,
+        "new_items": 0,
+        "lost_items": 0,
+        "metric": "Google Ads clicks"
+      },
+      "gsc_country": {
+        "net_change": -6520.0,
+        "top_declines": [
+          {
+            "country": "United States",
+            "clicks_previous": 14432.0,
+            "clicks_current": 8832.0,
+            "change": -5600.0,
+            "change_pct": -38.8,
+            "share_of_net_change_pct": 85.9,
+            "impressions_previous": 156325,
+            "impressions_current": 137378,
+            "position_previous": 5.7,
+            "position_current": 7.3
+          },
+          {
+            "country": "Canada",
+            "clicks_previous": 1173.0,
+            "clicks_current": 713.0,
+            "change": -460.0,
+            "change_pct": -39.2,
+            "share_of_net_change_pct": 7.1,
+            "impressions_previous": 12716,
+            "impressions_current": 11067,
+            "position_previous": 5.7,
+            "position_current": 7.3
+          },
+          {
+            "country": "United Kingdom",
+            "clicks_previous": 688.0,
+            "clicks_current": 424.0,
+            "change": -264.0,
+            "change_pct": -38.4,
+            "share_of_net_change_pct": 4.0,
+            "impressions_previous": 7678,
+            "impressions_current": 6040,
+            "position_previous": 5.7,
+            "position_current": 7.3
+          },
+          {
+            "country": "India",
+            "clicks_previous": 504.0,
+            "clicks_current": 308.0,
+            "change": -196.0,
+            "change_pct": -38.9,
+            "share_of_net_change_pct": 3.0,
+            "impressions_previous": 5353,
+            "impressions_current": 4749,
+            "position_previous": 5.7,
+            "position_current": 7.3
+          }
+        ],
+        "top_gains": [],
+        "top3_share_of_all_declines_pct": 97.0,
+        "items_compared": 4,
+        "new_items": 0,
+        "lost_items": 0,
+        "metric": "Search Console clicks"
+      },
+      "gsc_device": {
+        "net_change": -6078.0,
+        "top_declines": [
+          {
+            "device": "Mobile",
+            "clicks_previous": 11815.0,
+            "clicks_current": 7564.0,
+            "change": -4251.0,
+            "change_pct": -36.0,
+            "share_of_net_change_pct": 69.9,
+            "impressions_previous": 123290,
+            "impressions_current": 109440,
+            "position_previous": 5.7,
+            "position_current": 7.3
+          },
+          {
+            "device": "Desktop",
+            "clicks_previous": 4352.0,
+            "clicks_current": 2725.0,
+            "change": -1627.0,
+            "change_pct": -37.4,
+            "share_of_net_change_pct": 26.8,
+            "impressions_previous": 47522,
+            "impressions_current": 40388,
+            "position_previous": 6.1,
+            "position_current": 7.7
+          },
+          {
+            "device": "Tablet",
+            "clicks_previous": 520.0,
+            "clicks_current": 320.0,
+            "change": -200.0,
+            "change_pct": -38.5,
+            "share_of_net_change_pct": 3.3,
+            "impressions_previous": 5424,
+            "impressions_current": 4773,
+            "position_previous": 5.7,
+            "position_current": 7.3
+          }
+        ],
+        "top_gains": [],
+        "top3_share_of_all_declines_pct": 100.0,
+        "items_compared": 3,
+        "new_items": 0,
+        "lost_items": 0,
+        "metric": "Search Console clicks"
+      },
+      "gsc_page": {
+        "net_change": -6530.0,
+        "top_declines": [
+          {
+            "page": "https://www.northwindbakery.example/blog/sourdough-starter-guide",
+            "clicks_previous": 6388.0,
+            "clicks_current": 2543.0,
+            "change": -3845.0,
+            "change_pct": -60.2,
+            "share_of_net_change_pct": 58.9,
+            "impressions_previous": 53735,
+            "impressions_current": 44488,
+            "position_previous": 4.0,
+            "position_current": 7.1
+          },
+          {
+            "page": "https://www.northwindbakery.example/blog/sourdough-discard-recipes",
+            "clicks_previous": 2248.0,
+            "clicks_current": 836.0,
+            "change": -1412.0,
+            "change_pct": -62.8,
+            "share_of_net_change_pct": 21.6,
+            "impressions_previous": 22060,
+            "impressions_current": 17649,
+            "position_previous": 4.5,
+            "position_current": 7.7
+          },
+          {
+            "page": "https://www.northwindbakery.example/blog/how-to-shape-sourdough",
+            "clicks_previous": 1221.0,
+            "clicks_current": 483.0,
+            "change": -738.0,
+            "change_pct": -60.4,
+            "share_of_net_change_pct": 11.3,
+            "impressions_previous": 14107,
+            "impressions_current": 11334,
+            "position_previous": 5.0,
+            "position_current": 8.1
+          },
+          {
+            "page": "https://www.northwindbakery.example/",
+            "clicks_previous": 2777.0,
+            "clicks_current": 2524.0,
+            "change": -253.0,
+            "change_pct": -9.1,
+            "share_of_net_change_pct": 3.9,
+            "impressions_previous": 8765,
+            "impressions_current": 8285,
+            "position_previous": 1.1,
+            "position_current": 1.2
+          },
+          {
+            "page": "https://www.northwindbakery.example/locations",
+            "clicks_previous": 1236.0,
+            "clicks_current": 1141.0,
+            "change": -95.0,
+            "change_pct": -7.7,
+            "share_of_net_change_pct": 1.5,
+            "impressions_previous": 30530,
+            "impressions_current": 27963,
+            "position_previous": 10.1,
+            "position_current": 10.1
+          },
+          {
+            "page": "https://www.northwindbakery.example/custom-cakes",
+            "clicks_previous": 1095.0,
+            "clicks_current": 1018.0,
+            "change": -77.0,
+            "change_pct": -7.0,
+            "share_of_net_change_pct": 1.2,
+            "impressions_previous": 17627,
+            "impressions_current": 16339,
+            "position_previous": 6.0,
+            "position_current": 6.0
+          },
+          {
+            "page": "https://www.northwindbakery.example/menu",
+            "clicks_previous": 1465.0,
+            "clicks_current": 1388.0,
+            "change": -77.0,
+            "change_pct": -5.3,
+            "share_of_net_change_pct": 1.2,
+            "impressions_previous": 22230,
+            "impressions_current": 20947,
+            "position_previous": 6.8,
+            "position_current": 6.8
+          },
+          {
+            "page": "https://www.northwindbakery.example/blog/croissant-lamination",
+            "clicks_previous": 536.0,
+            "clicks_current": 503.0,
+            "change": -33.0,
+            "change_pct": -6.2,
+            "share_of_net_change_pct": 0.5,
+            "impressions_previous": 10143,
+            "impressions_current": 9670,
+            "position_previous": 6.4,
+            "position_current": 6.6
+          }
+        ],
+        "top_gains": [],
+        "top3_share_of_all_declines_pct": 91.8,
+        "items_compared": 8,
+        "new_items": 0,
+        "lost_items": 0,
+        "metric": "Search Console clicks"
+      },
+      "gsc_query": {
+        "net_change": -5680.0,
+        "top_declines": [
+          {
+            "query": "sourdough starter guide",
+            "clicks_previous": 3240.0,
+            "clicks_current": 1308.0,
+            "change": -1932.0,
+            "change_pct": -59.6,
+            "share_of_net_change_pct": 34.0,
+            "impressions_previous": 26121,
+            "impressions_current": 22021,
+            "position_previous": 3.8,
+            "position_current": 7.0
+          },
+          {
+            "query": "how to make sourdough starter",
+            "clicks_previous": 2315.0,
+            "clicks_current": 903.0,
+            "change": -1412.0,
+            "change_pct": -61.0,
+            "share_of_net_change_pct": 24.9,
+            "impressions_previous": 20605,
+            "impressions_current": 16664,
+            "position_previous": 4.2,
+            "position_current": 7.4
+          },
+          {
+            "query": "sourdough discard recipes",
+            "clicks_previous": 1955.0,
+            "clicks_current": 727.0,
+            "change": -1228.0,
+            "change_pct": -62.8,
+            "share_of_net_change_pct": 21.6,
+            "impressions_previous": 19183,
+            "impressions_current": 15347,
+            "position_previous": 4.5,
+            "position_current": 7.7
+          },
+          {
+            "query": "how to shape sourdough",
+            "clicks_previous": 1062.0,
+            "clicks_current": 420.0,
+            "change": -642.0,
+            "change_pct": -60.5,
+            "share_of_net_change_pct": 11.3,
+            "impressions_previous": 12267,
+            "impressions_current": 9856,
+            "position_previous": 5.0,
+            "position_current": 8.1
+          },
+          {
+            "query": "northwind bakery",
+            "clicks_previous": 2415.0,
+            "clicks_current": 2195.0,
+            "change": -220.0,
+            "change_pct": -9.1,
+            "share_of_net_change_pct": 3.9,
+            "impressions_previous": 7622,
+            "impressions_current": 7204,
+            "position_previous": 1.1,
+            "position_current": 1.2
+          },
+          {
+            "query": "custom birthday cakes chicago",
+            "clicks_previous": 952.0,
+            "clicks_current": 885.0,
+            "change": -67.0,
+            "change_pct": -7.0,
+            "share_of_net_change_pct": 1.2,
+            "impressions_previous": 15328,
+            "impressions_current": 14208,
+            "position_previous": 6.0,
+            "position_current": 6.0
+          },
+          {
+            "query": "northwind bakery hours",
+            "clicks_previous": 793.0,
+            "clicks_current": 743.0,
+            "change": -50.0,
+            "change_pct": -6.3,
+            "share_of_net_change_pct": 0.9,
+            "impressions_previous": 2625,
+            "impressions_current": 2489,
+            "position_previous": 1.2,
+            "position_current": 1.2
+          },
+          {
+            "query": "best croissants chicago",
+            "clicks_previous": 511.0,
+            "clicks_current": 474.0,
+            "change": -37.0,
+            "change_pct": -7.2,
+            "share_of_net_change_pct": 0.7,
+            "impressions_previous": 11131,
+            "impressions_current": 10412,
+            "position_previous": 6.9,
+            "position_current": 6.9
+          },
+          {
+            "query": "bakery near me",
+            "clicks_previous": 282.0,
+            "clicks_current": 249.0,
+            "change": -33.0,
+            "change_pct": -11.7,
+            "share_of_net_change_pct": 0.6,
+            "impressions_previous": 23923,
+            "impressions_current": 21827,
+            "position_previous": 11.0,
+            "position_current": 11.1
+          },
+          {
+            "query": "croissant lamination",
+            "clicks_previous": 466.0,
+            "clicks_current": 437.0,
+            "change": -29.0,
+            "change_pct": -6.2,
+            "share_of_net_change_pct": 0.5,
+            "impressions_previous": 8820,
+            "impressions_current": 8409,
+            "position_previous": 6.4,
+            "position_current": 6.6
+          }
+        ],
+        "top_gains": [],
+        "top3_share_of_all_declines_pct": 80.5,
+        "items_compared": 12,
+        "new_items": 0,
+        "lost_items": 0,
+        "metric": "Search Console clicks"
+      }
+    },
+    "unavailable": [],
+    "unlisted_query_clicks": {
+      "current": {
+        "site_clicks": 10434,
+        "listed_query_clicks": 9074,
+        "unlisted_share_pct": 13.0
+      },
+      "previous": {
+        "site_clicks": 16971,
+        "listed_query_clicks": 14754,
+        "unlisted_share_pct": 13.1
+      }
+    }
+  },
+  "q4_what_kind": {
+    "site": {
+      "numbers": {
+        "clicks_previous": 16971,
+        "clicks_current": 10434,
+        "clicks_pct": -38.5,
+        "impressions_previous": 179201,
+        "impressions_current": 156673,
+        "impressions_pct": -12.6,
+        "ctr_previous_pct": 9.47,
+        "ctr_current_pct": 6.66,
+        "ctr_change_pct": -29.7,
+        "position_previous": 5.7,
+        "position_current": 7.3,
+        "position_change": 1.6
+      },
+      "pattern": "ranking_loss",
+      "explanation": "Average position got worse, so pages show lower in results and get fewer clicks.",
+      "click_change_split": {
+        "from_impressions_change": -2133,
+        "from_ctr_change": -4404,
+        "total_change": -6537
+      }
+    },
+    "top_declining_pages": [
+      {
+        "page": "https://www.northwindbakery.example/blog/sourdough-starter-guide",
+        "pattern": "ranking_loss",
+        "clicks_previous": 6388,
+        "clicks_current": 2543,
+        "clicks_pct": -60.2,
+        "impressions_previous": 53735,
+        "impressions_current": 44488,
+        "impressions_pct": -17.2,
+        "ctr_previous_pct": 11.89,
+        "ctr_current_pct": 5.72,
+        "ctr_change_pct": -51.9,
+        "position_previous": 4.0,
+        "position_current": 7.1,
+        "position_change": 3.1
+      },
+      {
+        "page": "https://www.northwindbakery.example/blog/sourdough-discard-recipes",
+        "pattern": "ranking_loss",
+        "clicks_previous": 2248,
+        "clicks_current": 836,
+        "clicks_pct": -62.8,
+        "impressions_previous": 22060,
+        "impressions_current": 17649,
+        "impressions_pct": -20.0,
+        "ctr_previous_pct": 10.19,
+        "ctr_current_pct": 4.74,
+        "ctr_change_pct": -53.5,
+        "position_previous": 4.5,
+        "position_current": 7.7,
+        "position_change": 3.2
+      },
+      {
+        "page": "https://www.northwindbakery.example/blog/how-to-shape-sourdough",
+        "pattern": "ranking_loss",
+        "clicks_previous": 1221,
+        "clicks_current": 483,
+        "clicks_pct": -60.4,
+        "impressions_previous": 14107,
+        "impressions_current": 11334,
+        "impressions_pct": -19.7,
+        "ctr_previous_pct": 8.66,
+        "ctr_current_pct": 4.26,
+        "ctr_change_pct": -50.8,
+        "position_previous": 5.0,
+        "position_current": 8.1,
+        "position_change": 3.1
+      },
+      {
+        "page": "https://www.northwindbakery.example/",
+        "pattern": "mixed",
+        "clicks_previous": 2777,
+        "clicks_current": 2524,
+        "clicks_pct": -9.1,
+        "impressions_previous": 8765,
+        "impressions_current": 8285,
+        "impressions_pct": -5.5,
+        "ctr_previous_pct": 31.68,
+        "ctr_current_pct": 30.46,
+        "ctr_change_pct": -3.8,
+        "position_previous": 1.1,
+        "position_current": 1.2,
+        "position_change": 0.1
+      },
+      {
+        "page": "https://www.northwindbakery.example/locations",
+        "pattern": "mixed",
+        "clicks_previous": 1236,
+        "clicks_current": 1141,
+        "clicks_pct": -7.7,
+        "impressions_previous": 30530,
+        "impressions_current": 27963,
+        "impressions_pct": -8.4,
+        "ctr_previous_pct": 4.05,
+        "ctr_current_pct": 4.08,
+        "ctr_change_pct": 0.8,
+        "position_previous": 10.1,
+        "position_current": 10.1,
+        "position_change": 0.0
+      }
+    ],
+    "brand_split": {
+      "branded": {
+        "queries": 3,
+        "clicks_previous": 3806,
+        "clicks_current": 3516,
+        "clicks_pct": -7.6,
+        "impressions_previous": 12349,
+        "impressions_current": 11641,
+        "impressions_pct": -5.7
+      },
+      "non_branded": {
+        "queries": 9,
+        "clicks_previous": 10948,
+        "clicks_current": 5558,
+        "clicks_pct": -49.2,
+        "impressions_previous": 143475,
+        "impressions_current": 124599,
+        "impressions_pct": -13.2
+      },
+      "pattern": "non_brand",
+      "explanation": "Non-branded searches fell while branded held. That points to SEO visibility, not brand demand.",
+      "brand_terms": [
+        "northwind"
+      ],
+      "note": "Only listed queries are split. Clicks from queries Search Console does not list are excluded."
+    }
+  },
+  "q5_when": {
+    "change_point": {
+      "date": "2026-10-06",
+      "before_daily_avg": 630.9,
+      "after_daily_avg": 292.8,
+      "shift_pct": -53.6,
+      "strength": "strong",
+      "test_statistic": 29.1,
+      "window_start": "2026-06-28",
+      "window_end": "2026-10-25"
+    },
+    "matches": [
+      {
+        "start": "2026-10-05",
+        "end": "2026-10-05",
+        "type": "site change",
+        "name": "Site redesign launched (new blog template)",
+        "source": "your event log",
+        "days_from_change_point": 1,
+        "relation": "coincides with"
+      },
+      {
+        "start": "2026-09-24",
+        "end": "2026-10-08",
+        "type": "spam",
+        "name": "September 2026 spam update",
+        "source": "Google update list",
+        "url": "https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history",
+        "days_from_change_point": 12,
+        "relation": "coincides with"
+      }
+    ],
+    "match_window_days": 3,
+    "update_list_last_updated": "2026-10-31"
+  },
+  "q6_next_checks": [
+    {
+      "check": "Check tracking on 2026-10-12: tag deployments, consent banner changes, site outages.",
+      "why": "GA4 has 1 day(s) far below normal in the analysis window. Every GA4 channel dropped on the same day, which usually points to tracking rather than real demand.",
+      "confidence": "high"
+    },
+    {
+      "check": "Look at ranking changes for /blog/sourdough-starter-guide, /blog/sourdough-discard-recipes, /blog/how-to-shape-sourdough: compare them with the pages now ranking above them, and check indexing and canonical tags.",
+      "why": "Average position got worse for the pages driving the decline.",
+      "confidence": "high"
+    },
+    {
+      "check": "Review what the 'Site redesign launched (new blog template)' change (2026-10-05) did to the affected pages: templates, titles, internal links, canonical and noindex tags, redirects.",
+      "why": "The trend shift coincides with this event.",
+      "confidence": "medium"
+    },
+    {
+      "check": "Read Google's guidance for the September 2026 spam update and review the affected pages against it.",
+      "why": "The trend shift coincides with this update. Timing alone does not prove it caused the change.",
+      "confidence": "low"
+    }
+  ],
+  "inputs": {
+    "brand_terms": [
+      "northwind"
+    ],
+    "events_file": "../../sample-data/events.csv",
+    "events_count": 3,
+    "google_update_list": {
+      "last_updated": "2026-10-31",
+      "coverage": "Confirmed Google Search ranking updates from March 2024 onward, as listed on Google's Search Status Dashboard (dates in US Pacific time).",
+      "how_to_update": "Add a row for each new update listed at https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history, then change last_updated. Pull requests welcome.",
+      "caveat": "Dates were compiled from the dashboard and reports of it. Rows with a note were not re-checked against the dashboard itself.",
+      "entries": 18
+    }
+  },
+  "thresholds": {
+    "near_zero_share": 0.1,
+    "sync_drop_share": 0.5,
+    "sync_drop_channels": 0.8,
+    "ratio_shift_pct": 15.0,
+    "material_change_pct": 5.0,
+    "impressions_change_pct": 10.0,
+    "ctr_change_pct": 10.0,
+    "position_change": 1.0,
+    "brand_change_pct": 10.0,
+    "z_unusual": 2.0,
+    "z_somewhat": 1.0,
+    "min_history_windows": 8,
+    "changepoint_min_segment": 7,
+    "changepoint_window_days": 120
+  },
+  "charts": [
+    {
+      "id": "trend",
+      "file": "charts/trend.png",
+      "title": "Search Console clicks trend"
+    },
+    {
+      "id": "where_page",
+      "file": "charts/where_page.png",
+      "title": "Pages: change in Search Console clicks"
+    },
+    {
+      "id": "where_query",
+      "file": "charts/where_query.png",
+      "title": "Queries: change in Search Console clicks"
+    },
+    {
+      "id": "where_channel",
+      "file": "charts/where_channel.png",
+      "title": "Channels: change in GA4 sessions"
+    },
+    {
+      "id": "brand_split",
+      "file": "charts/brand_split.png",
+      "title": "Branded vs non-branded change"
+    }
+  ]
+}

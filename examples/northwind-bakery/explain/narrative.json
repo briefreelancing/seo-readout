@@ -1,0 +1,20 @@
+{
+  "title": "Why search traffic fell in October",
+  "eyebrow": "Search traffic readout",
+  "client": "Northwind Bakery",
+  "prepared_by": "Readout example",
+  "headline": "Clicks from Google search fell 38.5% because three sourdough blog posts dropped from about position 4 to about position 7. The drop started on October 6, the day after the new blog template launched.",
+  "summary": [
+    "Search Console clicks went from 16,971 to 10,434 between the two 28-day periods. That is far outside the normal range for this site, and it is not a seasonal pattern: over the same weeks last year, clicks moved only -6.7%.",
+    "Almost all of the loss sits in three blog posts about sourdough, and it comes from lower rankings rather than fewer searches. Branded searches for Northwind Bakery held up.",
+    "The timing points first to the blog redesign on October 5. It also falls inside Google's September 2026 spam update, so both are worth checking. Timing alone does not prove either one caused it."
+  ],
+  "sections": {
+    "is_it_real": "Yes. The drop shows up in both Search Console and GA4, and the ratio between the two barely moved (0.859 to 0.826), so this is a real change in visits, not a tracking problem.\n\nSeparately, GA4 recorded only 20 sessions on October 12, against a usual level of about 854. Every channel dropped that day, which points to a tracking gap, not lost customers. It does not affect the Search Console numbers in this report, but GA4 totals for this period are slightly understated.",
+    "is_it_unusual": "Yes. A normal 28-day swing for this site is between -5.6% and 5.8%. This period fell 38.5%. Last year the same weeks moved -6.7%, so seasonality explains very little of it.",
+    "where": "The three sourdough posts account for 91.8% of all click losses. The sourdough starter guide alone accounts for 58.9% of the net change, falling from 6,388 clicks to 2,543.\n\nThe top losing searches are all sourdough topics, such as \"sourdough starter guide\" and \"how to make sourdough starter\".",
+    "what_kind": "This is a **ranking loss**. Average position across the site slipped from 5.7 to 7.3, and on the sourdough starter guide it went from 4.0 to 7.1. Lower positions mean fewer people see and click the result, so the click-through rate fell from 9.47% to 6.66%.\n\nIt is not a brand problem: branded clicks moved -7.6% while non-branded clicks fell 49.2%.",
+    "when": "The trend shifted on October 6. Daily clicks averaged 630.9 before and 292.8 after, a -53.6% shift with a strong signal.\n\nThat date coincides with the blog redesign launched on October 5 and falls inside Google's September 2026 spam update (September 24 to October 8).",
+    "next_checks": "Start with the redesign, since it touched exactly the pages that lost rankings. Check the new blog template for changes to titles, headings, internal links, canonical tags and noindex settings. Then compare the three posts with the pages that now rank above them."
+  }
+}
