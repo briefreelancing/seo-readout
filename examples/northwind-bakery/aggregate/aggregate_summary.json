@@ -1,0 +1,736 @@
+{
+  "tool": "readout-traffic-aggregator",
+  "client": "Northwind Bakery",
+  "generated": "2026-11-01",
+  "periods": {
+    "current": {
+      "label": "current",
+      "start": "2026-09-28",
+      "end": "2026-10-25",
+      "days": 28
+    },
+    "previous": {
+      "label": "previous",
+      "start": "2026-08-31",
+      "end": "2026-09-27",
+      "days": 28
+    },
+    "year_ago": {
+      "label": "year_ago",
+      "start": "2025-09-29",
+      "end": "2025-10-26",
+      "days": 28
+    }
+  },
+  "sources": [
+    {
+      "file": "ga4_daily_channels.csv",
+      "detected_as": "GA4",
+      "rows": 3856,
+      "total_rows_removed": 0
+    },
+    {
+      "file": "google_ads_campaigns_daily.csv",
+      "detected_as": "Google Ads",
+      "rows": 1446,
+      "total_rows_removed": 1
+    },
+    {
+      "file": "Dates.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (dates)",
+      "rows": 482
+    },
+    {
+      "file": "Queries.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (query)",
+      "rows": 12
+    },
+    {
+      "file": "Pages.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (page)",
+      "rows": 8
+    },
+    {
+      "file": "Countries.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (country)",
+      "rows": 4
+    },
+    {
+      "file": "Devices.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (device)",
+      "rows": 3
+    },
+    {
+      "file": "Search appearance.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (search_appearance)",
+      "rows": 0
+    }
+  ],
+  "health": [
+    {
+      "check": "date_coverage",
+      "status": "ok",
+      "message": "GA4: 2025-07-01 to 2026-10-25 (482 days).",
+      "details": {
+        "system": "ga4",
+        "start": "2025-07-01",
+        "end": "2026-10-25"
+      }
+    },
+    {
+      "check": "near_zero_days",
+      "status": "warning",
+      "message": "GA4: 1 day(s) with sessions under 10% of the usual daily level (2026-10-12). This often means a tracking or export problem, not a real drop.",
+      "details": {
+        "system": "ga4",
+        "days": [
+          "2026-10-12"
+        ]
+      }
+    },
+    {
+      "check": "date_coverage",
+      "status": "ok",
+      "message": "Search Console: 2025-07-01 to 2026-10-25 (482 days).",
+      "details": {
+        "system": "gsc",
+        "start": "2025-07-01",
+        "end": "2026-10-25"
+      }
+    },
+    {
+      "check": "date_coverage",
+      "status": "ok",
+      "message": "Google Ads: 2025-07-01 to 2026-10-25 (482 days).",
+      "details": {
+        "system": "gads",
+        "start": "2025-07-01",
+        "end": "2026-10-25"
+      }
+    },
+    {
+      "check": "range_alignment",
+      "status": "ok",
+      "message": "All sources cover the same dates.",
+      "details": {}
+    },
+    {
+      "check": "currency",
+      "status": "ok",
+      "message": "Google Ads currency: USD.",
+      "details": {}
+    },
+    {
+      "check": "time_zones",
+      "status": "info",
+      "message": "Search Console reports dates in Pacific Time. GA4 and Google Ads use each account's own time zone, so single days can differ slightly between sources.",
+      "details": {}
+    }
+  ],
+  "totals": [
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "metric": "sessions",
+      "current": 20152.0,
+      "previous": 27525.0,
+      "change_pct": -26.8,
+      "year_ago": 25919.0,
+      "yoy_pct": -22.3
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "metric": "users",
+      "current": 16533.0,
+      "previous": 22571.0,
+      "change_pct": -26.8,
+      "year_ago": 21252.0,
+      "yoy_pct": -22.2
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "metric": "conversions",
+      "current": 546.0,
+      "previous": 675.0,
+      "change_pct": -19.1,
+      "year_ago": 632.0,
+      "yoy_pct": -13.6
+    },
+    {
+      "system": "Search Console",
+      "system_id": "gsc",
+      "metric": "clicks",
+      "current": 10434.0,
+      "previous": 16971.0,
+      "change_pct": -38.5,
+      "year_ago": 15811.0,
+      "yoy_pct": -34.0
+    },
+    {
+      "system": "Search Console",
+      "system_id": "gsc",
+      "metric": "impressions",
+      "current": 156673.0,
+      "previous": 179201.0,
+      "change_pct": -12.6,
+      "year_ago": 168551.0,
+      "yoy_pct": -7.0
+    },
+    {
+      "system": "Search Console",
+      "system_id": "gsc",
+      "metric": "ctr_pct",
+      "current": 6.66,
+      "previous": 9.47,
+      "change_pct": -29.7,
+      "year_ago": null,
+      "yoy_pct": null
+    },
+    {
+      "system": "Search Console",
+      "system_id": "gsc",
+      "metric": "avg_position",
+      "current": 7.3,
+      "previous": 5.7,
+      "change_pct": null,
+      "change_abs": 1.6,
+      "year_ago": 5.7,
+      "yoy_pct": null
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "metric": "impressions",
+      "current": 196117.0,
+      "previous": 207025.0,
+      "change_pct": -5.3,
+      "year_ago": 200551.0,
+      "yoy_pct": -2.2
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "metric": "clicks",
+      "current": 4886.0,
+      "previous": 5051.0,
+      "change_pct": -3.3,
+      "year_ago": 4911.0,
+      "yoy_pct": -0.5
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "metric": "spend",
+      "current": 5084.76,
+      "previous": 5361.32,
+      "change_pct": -5.2,
+      "year_ago": 5127.07,
+      "yoy_pct": -0.8
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "metric": "conversions",
+      "current": 205.27,
+      "previous": 209.15,
+      "change_pct": -1.9,
+      "year_ago": 199.42,
+      "yoy_pct": 2.9
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "metric": "avg_cpc",
+      "current": 1.04,
+      "previous": 1.06,
+      "change_pct": -2.0,
+      "year_ago": null,
+      "yoy_pct": null
+    }
+  ],
+  "channel_summary": [
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Cross-network",
+      "metric": "sessions",
+      "current": 1358.0,
+      "previous": 1467.0,
+      "change_pct": -7.4,
+      "year_ago": 1414.0,
+      "yoy_pct": -4.0,
+      "share_pct": 6.7
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Cross-network",
+      "metric": "users",
+      "current": 1115.0,
+      "previous": 1203.0,
+      "change_pct": -7.3,
+      "year_ago": 1159.0,
+      "yoy_pct": -3.8,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Cross-network",
+      "metric": "conversions",
+      "current": 27.0,
+      "previous": 31.0,
+      "change_pct": -12.9,
+      "year_ago": 28.0,
+      "yoy_pct": -3.6,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Direct",
+      "metric": "sessions",
+      "current": 3716.0,
+      "previous": 4114.0,
+      "change_pct": -9.7,
+      "year_ago": 3938.0,
+      "yoy_pct": -5.6,
+      "share_pct": 18.4
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Direct",
+      "metric": "users",
+      "current": 3051.0,
+      "previous": 3371.0,
+      "change_pct": -9.5,
+      "year_ago": 3230.0,
+      "yoy_pct": -5.5,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Direct",
+      "metric": "conversions",
+      "current": 133.0,
+      "previous": 140.0,
+      "change_pct": -5.0,
+      "year_ago": 132.0,
+      "yoy_pct": 0.8,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Email",
+      "metric": "sessions",
+      "current": 893.0,
+      "previous": 877.0,
+      "change_pct": 1.8,
+      "year_ago": 942.0,
+      "yoy_pct": -5.2,
+      "share_pct": 4.4
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Email",
+      "metric": "users",
+      "current": 733.0,
+      "previous": 721.0,
+      "change_pct": 1.7,
+      "year_ago": 774.0,
+      "yoy_pct": -5.3,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Email",
+      "metric": "conversions",
+      "current": 21.0,
+      "previous": 22.0,
+      "change_pct": -4.5,
+      "year_ago": 21.0,
+      "yoy_pct": 0.0,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Organic Search",
+      "metric": "sessions",
+      "current": 9315.0,
+      "previous": 15763.0,
+      "change_pct": -40.9,
+      "year_ago": 14571.0,
+      "yoy_pct": -36.1,
+      "share_pct": 46.2
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Organic Search",
+      "metric": "users",
+      "current": 7637.0,
+      "previous": 12925.0,
+      "change_pct": -40.9,
+      "year_ago": 11949.0,
+      "yoy_pct": -36.1,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Organic Search",
+      "metric": "conversions",
+      "current": 200.0,
+      "previous": 312.0,
+      "change_pct": -35.9,
+      "year_ago": 294.0,
+      "yoy_pct": -32.0,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Organic Social",
+      "metric": "sessions",
+      "current": 1202.0,
+      "previous": 1350.0,
+      "change_pct": -11.0,
+      "year_ago": 1211.0,
+      "yoy_pct": -0.7,
+      "share_pct": 6.0
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Organic Social",
+      "metric": "users",
+      "current": 989.0,
+      "previous": 1109.0,
+      "change_pct": -10.8,
+      "year_ago": 993.0,
+      "yoy_pct": -0.4,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Organic Social",
+      "metric": "conversions",
+      "current": 10.0,
+      "previous": 13.0,
+      "change_pct": -23.1,
+      "year_ago": 8.0,
+      "yoy_pct": 25.0,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Paid Search",
+      "metric": "sessions",
+      "current": 2716.0,
+      "previous": 2965.0,
+      "change_pct": -8.4,
+      "year_ago": 2847.0,
+      "yoy_pct": -4.6,
+      "share_pct": 13.5
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Paid Search",
+      "metric": "users",
+      "current": 2227.0,
+      "previous": 2431.0,
+      "change_pct": -8.4,
+      "year_ago": 2331.0,
+      "yoy_pct": -4.5,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Paid Search",
+      "metric": "conversions",
+      "current": 128.0,
+      "previous": 129.0,
+      "change_pct": -0.8,
+      "year_ago": 124.0,
+      "yoy_pct": 3.2,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Referral",
+      "metric": "sessions",
+      "current": 952.0,
+      "previous": 989.0,
+      "change_pct": -3.7,
+      "year_ago": 996.0,
+      "yoy_pct": -4.4,
+      "share_pct": 4.7
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Referral",
+      "metric": "users",
+      "current": 781.0,
+      "previous": 811.0,
+      "change_pct": -3.7,
+      "year_ago": 816.0,
+      "yoy_pct": -4.3,
+      "share_pct": null
+    },
+    {
+      "system": "GA4",
+      "system_id": "ga4",
+      "channel": "Referral",
+      "metric": "conversions",
+      "current": 27.0,
+      "previous": 28.0,
+      "change_pct": -3.6,
+      "year_ago": 25.0,
+      "yoy_pct": 8.0,
+      "share_pct": null
+    },
+    {
+      "system": "Search Console",
+      "system_id": "gsc",
+      "channel": "Organic Search",
+      "metric": "clicks",
+      "current": 10434.0,
+      "previous": 16971.0,
+      "change_pct": -38.5,
+      "year_ago": 15811.0,
+      "yoy_pct": -34.0,
+      "share_pct": 100.0
+    },
+    {
+      "system": "Search Console",
+      "system_id": "gsc",
+      "channel": "Organic Search",
+      "metric": "impressions",
+      "current": 156673.0,
+      "previous": 179201.0,
+      "change_pct": -12.6,
+      "year_ago": 168551.0,
+      "yoy_pct": -7.0,
+      "share_pct": null
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "channel": "Cross-network",
+      "metric": "impressions",
+      "current": 143530.0,
+      "previous": 151660.0,
+      "change_pct": -5.4,
+      "year_ago": 147110.0,
+      "yoy_pct": -2.4,
+      "share_pct": null
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "channel": "Cross-network",
+      "metric": "clicks",
+      "current": 1745.0,
+      "previous": 1783.0,
+      "change_pct": -2.1,
+      "year_ago": 1754.0,
+      "yoy_pct": -0.5,
+      "share_pct": 35.7
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "channel": "Cross-network",
+      "metric": "spend",
+      "current": 1143.1,
+      "previous": 1171.96,
+      "change_pct": -2.5,
+      "year_ago": 1132.73,
+      "yoy_pct": 0.9,
+      "share_pct": null
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "channel": "Cross-network",
+      "metric": "conversions",
+      "current": 53.49,
+      "previous": 54.27,
+      "change_pct": -1.4,
+      "year_ago": 50.53,
+      "yoy_pct": 5.9,
+      "share_pct": null
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "channel": "Paid Search",
+      "metric": "impressions",
+      "current": 52587.0,
+      "previous": 55365.0,
+      "change_pct": -5.0,
+      "year_ago": 53441.0,
+      "yoy_pct": -1.6,
+      "share_pct": null
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "channel": "Paid Search",
+      "metric": "clicks",
+      "current": 3141.0,
+      "previous": 3268.0,
+      "change_pct": -3.9,
+      "year_ago": 3157.0,
+      "yoy_pct": -0.5,
+      "share_pct": 64.3
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "channel": "Paid Search",
+      "metric": "spend",
+      "current": 3941.66,
+      "previous": 4189.36,
+      "change_pct": -5.9,
+      "year_ago": 3994.34,
+      "yoy_pct": -1.3,
+      "share_pct": null
+    },
+    {
+      "system": "Google Ads",
+      "system_id": "gads",
+      "channel": "Paid Search",
+      "metric": "conversions",
+      "current": 151.78,
+      "previous": 154.88,
+      "change_pct": -2.0,
+      "year_ago": 148.89,
+      "yoy_pct": 1.9,
+      "share_pct": null
+    }
+  ],
+  "side_by_side": [
+    {
+      "id": "organic",
+      "label": "Google organic search",
+      "a_label": "Search Console clicks",
+      "b_label": "GA4 organic sessions from Google",
+      "why_they_differ": [
+        "GA4 only records a session when its tag loads and, where a consent banner is used, when the visitor accepts tracking.",
+        "Ad blockers and privacy browsers can stop GA4 from recording a visit that Search Console still counts as a click.",
+        "One session can follow several clicks, and a visitor who clicks and leaves before the page loads is not recorded by GA4.",
+        "Search Console reports in Pacific Time; GA4 uses the property's time zone."
+      ],
+      "periods": {
+        "current": {
+          "a": 10434.0,
+          "b": 8622.0,
+          "gap": -1812.0,
+          "ratio_b_to_a": 0.826
+        },
+        "previous": {
+          "a": 16971.0,
+          "b": 14571.0,
+          "gap": -2400.0,
+          "ratio_b_to_a": 0.859
+        }
+      },
+      "ratio_change_pct": -3.8
+    },
+    {
+      "id": "paid_search",
+      "label": "Google Ads search campaigns",
+      "a_label": "Google Ads clicks (Search campaigns)",
+      "b_label": "GA4 Paid Search sessions",
+      "why_they_differ": [
+        "Several ad clicks by the same person can end up in a single GA4 session.",
+        "Consent banners and ad blockers stop GA4 from recording some visits.",
+        "If auto-tagging is off or a redirect strips the click ID, paid visits can be credited to another channel in GA4.",
+        "GA4 groups some Google Ads traffic (for example Performance Max) outside Paid Search."
+      ],
+      "periods": {
+        "current": {
+          "a": 3141.0,
+          "b": 2716.0,
+          "gap": -425.0,
+          "ratio_b_to_a": 0.865
+        },
+        "previous": {
+          "a": 3268.0,
+          "b": 2965.0,
+          "gap": -303.0,
+          "ratio_b_to_a": 0.907
+        }
+      },
+      "ratio_change_pct": -4.6
+    },
+    {
+      "id": "ads_conversions",
+      "label": "Google Ads conversions",
+      "a_label": "Google Ads conversions (all campaigns)",
+      "b_label": "GA4 key events from google / cpc",
+      "why_they_differ": [
+        "Google Ads and GA4 can use different attribution models and lookback windows.",
+        "Google Ads can report a conversion on the date of the ad click, while GA4 reports it on the date it happened.",
+        "The two tools may count different actions, or count repeat conversions differently.",
+        "Consent banners and ad blockers affect GA4 more than Google Ads' own measurement."
+      ],
+      "periods": {
+        "current": {
+          "a": 205.27,
+          "b": 155.0,
+          "gap": -50.27,
+          "ratio_b_to_a": 0.755
+        },
+        "previous": {
+          "a": 209.15,
+          "b": 160.0,
+          "gap": -49.15,
+          "ratio_b_to_a": 0.765
+        }
+      },
+      "ratio_change_pct": -1.3
+    }
+  ],
+  "period_totals": [],
+  "charts": [
+    {
+      "file": "charts/ga4_sessions_by_channel.png",
+      "title": "GA4 sessions by channel (weekly)"
+    },
+    {
+      "file": "charts/search_console_trend.png",
+      "title": "Search Console clicks and impressions (7-day average)"
+    },
+    {
+      "file": "charts/google_ads_trend.png",
+      "title": "Google Ads clicks and spend (weekly)"
+    }
+  ],
+  "outputs": {
+    "daily_csv": "readout_daily.csv",
+    "search_console_breakdowns_csv": "readout_search_console_breakdowns.csv",
+    "workbook": "readout_workbook.xlsx"
+  }
+}

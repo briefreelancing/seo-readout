@@ -1,0 +1,6 @@
+{
+  "last_updated": "2026-10-31",
+  "coverage": "Confirmed Google Search ranking updates from March 2024 onward, as listed on Google's Search Status Dashboard (dates in US Pacific time).",
+  "how_to_update": "Add a row for each new update listed at https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history, then change last_updated. Pull requests welcome.",
+  "caveat": "Dates were compiled from the dashboard and reports of it. Rows with a note were not re-checked against the dashboard itself."
+}

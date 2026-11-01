@@ -1,0 +1,20 @@
+{
+  "title": "Short title, for example: Why search traffic fell in October",
+  "eyebrow": "Search traffic readout",
+  "client": "Client name",
+  "prepared_by": "Your name or studio (optional)",
+  "headline": "One or two sentences: what changed, by how much, the most likely driver, and when it started.",
+  "summary": [
+    "Paragraph 1: the size of the change and whether it is unusual or seasonal.",
+    "Paragraph 2: where it is concentrated and what kind of change it is.",
+    "Paragraph 3: timing and what to look at first. Use 'coincides with', never 'caused by'."
+  ],
+  "sections": {
+    "is_it_real": "Answer first (yes, partly, or mostly tracking), then the evidence. Mention tracking issues in other sources separately.",
+    "is_it_unusual": "Compare the change with the typical range and with last year.",
+    "where": "Name the pages, queries or channels that account for most of the change, with their share.",
+    "what_kind": "Name the pattern in plain words and give the numbers behind it. Include the branded split if available.",
+    "when": "Give the date the trend shifted, the before and after averages, and the events it coincides with.",
+    "next_checks": "One short paragraph on where to start. The full list of checks is added automatically."
+  }
+}
