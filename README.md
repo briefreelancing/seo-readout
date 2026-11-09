@@ -152,4 +152,4 @@ Run `python -m pytest -q` before opening a pull request.
 
 MIT. See [LICENSE](LICENSE).
 
-Built by Rheya at BrieFreelancing.
+Built by BrieFreelancing.
