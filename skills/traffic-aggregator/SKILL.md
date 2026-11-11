@@ -19,7 +19,7 @@ Native exports, exactly as downloaded. Users should not reformat anything.
 
 | Source | What works | Notes |
 |---|---|---|
-| Search Console | The Performance export zip, or its CSVs | `Dates.csv` gives the daily trend. Several zips can be combined. |
+| Search Console | The Performance export zip, or its CSVs | The daily table (`Chart.csv` or `Dates.csv`) gives the trend. Several zips can be combined. |
 | GA4 | CSV export from an Exploration or report | Needs a Date column for trends. Channel or source / medium columns give the channel split. |
 | Google Ads | Campaign report CSV | Needs the Day segment for trends. Campaign type improves channel mapping. |
 
