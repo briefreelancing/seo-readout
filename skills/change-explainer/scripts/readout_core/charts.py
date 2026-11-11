@@ -154,7 +154,8 @@ def diverging_bars(items: list[tuple[str, float]], path: Path, title: str, subti
         ax.text(v + (span * 0.02 if v >= 0 else -span * 0.02), i, value_fmt(v), va="center",
                 ha="left" if v >= 0 else "right", fontsize=8, color=INK)
     lo, hi = min(vals, default=0), max(vals, default=0)
-    ax.set_xlim(min(lo * 1.3, -span * 0.12), max(hi * 1.3, span * 0.12))
+    pad = span * 0.2  # room for the value labels on both sides
+    ax.set_xlim(min(lo, 0) - pad, max(hi, 0) + pad)
     ax.xaxis.set_major_formatter(FuncFormatter(_fmt))
     fig.tight_layout(rect=(0, 0, 1, 1 - 0.65 / H))
     fig.savefig(path, facecolor=SURFACE)
