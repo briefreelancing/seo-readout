@@ -42,7 +42,7 @@ have changed; say so if a step doesn't match.
 
    Options: `--metric auto|gsc_clicks|ga4_sessions|ga4_organic|ga4_conversions|ads_clicks`
    (auto picks Search Console clicks if available), `--current-start/--current-end`,
-   `--previous-start/--previous-end`, `--days 28`, `--match-days 3`.
+   `--previous-start/--previous-end`, `--days 28`, `--match-days 3`, `--event-lag-days 14`.
    The default periods are the last 28 days against the 28 days before, plus the same weekdays
    a year earlier. The user can override them.
 4. **Read `readout_explain/findings.json`** and write the chat summary (format below).
@@ -59,14 +59,16 @@ have changed; say so if a step doesn't match.
 |---|---|---|
 | `q1_is_it_real` | `verdict`, `verdict_text`, `checks`, `tracking_gap_effect` | Lead with the verdict. A flag in a source other than the focus metric is a side issue: mention it, but don't let it override the verdict. |
 | `q2_is_it_unusual` | change vs previous and year ago, typical range, z-score, `matches_last_year_pattern` | "Unusual" means outside this site's normal swings. If `matches_last_year_pattern` is true, call out seasonality. |
-| `q3_where` | `breakdowns` per dimension: top declines and gains, share of net change, `top3_share_of_all_declines_pct`; `unavailable` | Name the few items driving the change, with their share. |
-| `q4_what_kind` | site `pattern`, numbers, `click_change_split`, `top_declining_pages`, `brand_split` | Translate the pattern into plain words (see below). |
-| `q5_when` | `change_point` (date, before and after averages, strength), `matches`, `update_list_warning` | Give the date and what it coincides with. |
+| `q3_where` | `breakdowns` per dimension: top declines and gains, share of net change, `top3_share_of_all_declines_pct`; `stopped_ads_campaigns`; `unavailable` | Name the few items driving the change, with their share. Mention any Ads campaign that stopped getting clicks. |
+| `q4_what_kind` | site `pattern`, numbers, `click_change_split`, `top_declining_pages`, `top_gaining_pages`, `brand_split` | Translate the pattern into plain words (see below). For a gain, use `top_gaining_pages`. |
+| `q5_when` | `change_point` (date, before and after averages, strength), `matches` (each with `relation` and `days_from_change_point`), `weak_shift_note`, `update_list_warning` | Give the date and what it lines up with (see the writing rules). |
 | `q6_next_checks` | Suggested checks with `confidence` and `why` | Present the high ones first. You may reword, not add new claims. |
 | `data_health` | Warnings about the data | Mention any that affect conclusions. |
 
 Pattern meanings:
 - `ranking_loss`: average position got worse, so fewer people see and click the result.
+- `ranking_gain`: average position improved, so more people see and click the result.
+- `higher_demand_or_visibility`: more searches showed the site while position held. Check seasonality and demand.
 - `lower_demand_or_visibility`: fewer searches showed the site while position held. Check seasonality and demand.
 - `serp_change`: impressions and position held but fewer clicks. Something on the results page may be taking clicks (features, AI answers), or titles became less appealing.
 - `mixed`: no single pattern. Say so.
@@ -76,6 +78,11 @@ Pattern meanings:
 - **Coincides with, never caused by.** Matching dates show timing only. Say "the shift coincides
   with the site redesign on October 5", never "the redesign caused the drop". Google updates get
   the most caution: many sites move during an update for unrelated reasons.
+- **Match the wording to `relation`.** `coincides with`: the shift is within a few days of the
+  event. `follows`: the shift began `days_from_change_point` days after an event from the user's
+  log, as site changes often take time to show in search. Say "the gain began 8 days after the
+  page refresh on October 15", never "the refresh caused the gain". If `weak_shift_note` is
+  present, say the timing match is less reliable.
 - **Lead with the answer**, then the evidence. One idea per sentence. Plain words; expand jargon
   (CTR, SERP) on first use.
 - **Average position: lower is better.** Report position changes in points, not percent.

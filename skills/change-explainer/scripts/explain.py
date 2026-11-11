@@ -10,7 +10,7 @@ Usage:
          [--metric auto|gsc_clicks|ga4_sessions|ga4_organic|ga4_conversions|ads_clicks]
          [--current-start YYYY-MM-DD --current-end YYYY-MM-DD]
          [--previous-start YYYY-MM-DD --previous-end YYYY-MM-DD] [--days 28]
-         [--match-days 3] [--client "Client name"]
+         [--match-days 3] [--event-lag-days 14] [--client "Client name"]
 
 Writes findings.json (every number) and charts/. Claude writes the narrative;
 render_report.py turns findings + narrative into the client report.
@@ -107,6 +107,8 @@ def main(argv=None):
     ap.add_argument("--previous-end")
     ap.add_argument("--days", type=int, default=28)
     ap.add_argument("--match-days", type=int, default=3, help="How close an event must be to the trend shift")
+    ap.add_argument("--event-lag-days", type=int, default=14,
+                    help="How many days after an event-log entry a shift can start and still be listed (site changes take time to show)")
     args = ap.parse_args(argv)
 
     out = Path(args.out)
@@ -131,7 +133,8 @@ def main(argv=None):
     q2 = q2_is_it_unusual(ds, periods, focus, length)
     q3 = q3_where(ds, periods, focus)
     q4 = q4_what_kind(ds, periods, q3, brand)
-    q5 = q5_when(focus, periods, events, updates, updates_meta, args.match_days, q1.pop("gap_days"))
+    q5 = q5_when(focus, periods, events, updates, updates_meta, args.match_days, q1.pop("gap_days"),
+                 args.event_lag_days)
     q6 = q6_next_checks(q1, q2, q3, q4, q5)
     chart_list = make_charts(out, focus, periods, q3, q4, q5)
 
