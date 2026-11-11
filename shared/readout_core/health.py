@@ -7,6 +7,7 @@ from datetime import date, timedelta
 import pandas as pd
 
 from .load import Dataset, SYSTEM_LABELS
+from .lowdays import low_days
 from .periods import Period, coverage
 
 MAIN_METRIC = {"ga4": "sessions", "gsc": "clicks", "gads": "clicks"}
@@ -50,16 +51,18 @@ def run_checks(ds: Dataset, periods: dict[str, Period] | None, today: date | Non
                 system=sysname, gaps=[[a.isoformat(), b.isoformat()] for a, b in gaps])
 
         metric = MAIN_METRIC[sysname]
-        per_day = sub.groupby("date")[metric].sum(min_count=1).dropna()
+        per_day = sub.groupby("date")[metric].sum(min_count=1).dropna().sort_index()
         if len(per_day) >= 14:
-            med = per_day.median()
-            low = per_day[per_day < 0.1 * med] if med > 0 else per_day[per_day <= 0]
-            if len(low):
-                days = ", ".join(str(d) for d in list(low.index)[:5])
+            companion = None
+            if sysname == "gsc" and "impressions" in sub:
+                companion = sub.groupby("date")["impressions"].sum(min_count=1).dropna().sort_index()
+            low = [x["date"] for x in low_days(per_day, companion=companion)]
+            if low:
+                days = ", ".join(str(d) for d in low[:5])
                 add("near_zero_days", "warning",
                     f"{label}: {len(low)} day(s) with {metric} under 10% of the usual daily level ({days}). "
                     "This often means a tracking or export problem, not a real drop.",
-                    system=sysname, days=[d.isoformat() for d in low.index])
+                    system=sysname, days=[d.isoformat() for d in low])
 
         for m in ["sessions", "users", "conversions", "impressions", "clicks", "spend"]:
             if m in sub and sub[m].notna().any() and (sub[m].fillna(0) == 0).all():
@@ -95,8 +98,9 @@ def run_checks(ds: Dataset, periods: dict[str, Period] | None, today: date | Non
     elif ds.currencies:
         add("currency", "ok", f"Google Ads currency: {next(iter(ds.currencies))}.")
 
+    # Search Console labels web search "Web" or "Web (text-based)" depending on the export.
     types = {t.lower() for t in ds.gsc_search_types}
-    if types and types != {"web"}:
+    if types and not all(t.startswith("web") for t in types):
         add("gsc_search_type", "warning",
             f"Search Console export is filtered to search type: {', '.join(sorted(ds.gsc_search_types))}. "
             "Comparisons with GA4 assume web search.")

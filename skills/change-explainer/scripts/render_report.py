@@ -252,11 +252,21 @@ def build(findings: dict, narr: dict, base: Path) -> str:
                 f"<tr><td>Strength of the signal</td><td class='n'>{esc(cp['strength'])}</td></tr>"]
         parts.append(table([("Trend shift", False), ("", True)], rows))
     if q5.get("matches"):
+        def timing(m):
+            if m.get("relation") == "follows":
+                return f"Shift began {m['days_from_change_point']} days after"
+            return "Coincides with"
         rows = [f"<tr><td>{esc(m['name'])}</td><td>{esc(m['source'])}</td><td class='n'>{esc(m['start'])}"
-                f"{(' to ' + esc(m['end'])) if m['end'] != m['start'] else ''}</td></tr>" for m in q5["matches"]]
-        parts.append(f"<p>The shift <strong>coincides with</strong> these events (within {q5['match_window_days']} days). "
+                f"{(' to ' + esc(m['end'])) if m['end'] != m['start'] else ''}</td><td>{esc(timing(m))}</td></tr>"
+                for m in q5["matches"]]
+        lag = q5.get("event_lag_days")
+        lag_txt = (f" Entries from your event log are also listed if the shift began up to {lag} days after them, "
+                   "because site changes often take time to show in search.") if lag else ""
+        parts.append(f"<p>The shift lines up in time with these events (within {q5['match_window_days']} days).{lag_txt} "
                      "Timing alone does not show that an event caused the change.</p>")
-        parts.append(table([("Event", False), ("From", False), ("Dates", True)], rows))
+        parts.append(table([("Event", False), ("From", False), ("Dates", True), ("Timing", False)], rows))
+        if q5.get("weak_shift_note"):
+            parts.append(f'<p class="note">{esc(q5["weak_shift_note"])}</p>')
     if q5.get("update_list_warning"):
         parts.append(f'<p class="note">{esc(q5["update_list_warning"])}</p>')
 

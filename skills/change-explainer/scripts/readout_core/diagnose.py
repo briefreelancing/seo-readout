@@ -18,10 +18,13 @@ import pandas as pd
 
 from .load import SYSTEM_LABELS, Dataset
 from .metrics import filt, gsc_position, side_by_side, total
+from .lowdays import LOW_SHARE, low_days, trailing_median
 from .periods import Period, clean, in_period, pct_change
 
 THRESHOLDS = {
-    "near_zero_share": 0.10,       # day below 10% of trailing median = possible tracking gap
+    "near_zero_share": LOW_SHARE,  # day below 10% of trailing median = possible tracking gap (see lowdays.py,
+                                   # which also requires the low value to be unlikely by chance)
+    "event_lag_days": 14,          # site changes often show in search after a delay; look this far back
     "sync_drop_share": 0.50,       # channel below 50% of its trailing median that day
     "sync_drop_channels": 0.80,    # ...for at least 80% of channels = all-channel drop
     "ratio_shift_pct": 15.0,       # GA4/Search Console ratio moving this much = check tracking
@@ -59,9 +62,7 @@ def focus_series(ds: Dataset, metric_choice: str = "auto") -> dict | None:
 
 
 # ------------------------------------------------------------ Q1: is it real?
-def _trailing_median(s: pd.Series, d: date, n: int = 14) -> float | None:
-    prior = s[(s.index < d) & (s.index >= d - timedelta(days=n))]
-    return float(prior.median()) if len(prior) >= 7 else None
+_trailing_median = trailing_median
 
 
 def q1_is_it_real(ds: Dataset, periods: dict[str, Period], focus: dict) -> dict:
@@ -74,12 +75,12 @@ def q1_is_it_real(ds: Dataset, periods: dict[str, Period], focus: dict) -> dict:
         s = filt(ds.daily, system).groupby("date")[metric].sum(min_count=1).dropna().sort_index()
         if s.empty:
             continue
-        flagged = []
-        for d, v in s[(s.index >= window.start) & (s.index <= window.end)].items():
-            med = _trailing_median(s, d)
-            if med and med > 0 and v < t["near_zero_share"] * med:
-                flagged.append({"date": d.isoformat(), "value": clean(v, 0), "usual": clean(med, 0),
-                                "missing_estimate": clean(med - v, 0)})
+        companion = None
+        if system == "gsc":
+            companion = filt(ds.daily, "gsc").groupby("date")["impressions"].sum(min_count=1).dropna().sort_index()
+        flagged = [{"date": x["date"].isoformat(), "value": clean(x["value"], 0), "usual": clean(x["usual"], 0),
+                    "missing_estimate": clean(x["usual"] - x["value"], 0)}
+                   for x in low_days(s, window.start, window.end, companion=companion)]
         expected_days = window.days
         present = s[(s.index >= window.start) & (s.index <= window.end)].index.nunique()
         missing = expected_days - present
@@ -302,6 +303,17 @@ def q3_where(ds: Dataset, periods: dict[str, Period], focus: dict) -> dict:
             m = pd.concat([c, p], axis=1).reset_index().rename(columns={"index": "campaign"})
             net = float(m["clicks_current"].fillna(0).sum() - m["clicks_previous"].fillna(0).sum())
             res["breakdowns"]["ads_campaign"] = _contrib(m, "campaign", "clicks", net) | {"metric": "Google Ads clicks"}
+            # Campaigns that stopped getting clicks part way through (paused, out of budget, ended).
+            window = ad[(ad["date"] >= periods["previous"].start) & (ad["date"] <= periods["current"].end)]
+            last_day = window["date"].max()
+            stopped = []
+            for camp, g in window[window["clicks"].fillna(0) > 0].groupby("campaign"):
+                last = g["date"].max()
+                if (last_day - last).days >= 3:
+                    stopped.append({"campaign": camp, "last_day_with_clicks": last.isoformat(),
+                                    "days_without_clicks": (last_day - last).days})
+            if stopped:
+                res["stopped_ads_campaigns"] = stopped
     pairs = gsc_dimension_pairs(ds, periods)
     if pairs:
         for dim, m in pairs.items():
@@ -383,15 +395,18 @@ def q4_what_kind(ds: Dataset, periods: dict[str, Period], q3: dict, brand_terms:
         if "page" in pairs:
             m = pairs["page"].copy()
             m["delta"] = m["clicks_current"].fillna(0) - m["clicks_previous"].fillna(0)
-            pages = []
-            for _, r in m.sort_values("delta").head(5).iterrows():
-                if r["delta"] >= 0:
-                    continue
-                n = _gsc_numbers(r["clicks_current"], r["impressions_current"], r["clicks_previous"],
-                                 r["impressions_previous"], r["position_current"], r["position_previous"])
-                p, w = classify(n["clicks_pct"], n["impressions_pct"], n["ctr_change_pct"], n["position_change"])
-                pages.append({"page": r["page"], "pattern": p, **n})
-            res["top_declining_pages"] = pages
+            def page_rows(rows, keep):
+                pages = []
+                for _, r in rows.iterrows():
+                    if not keep(r["delta"]):
+                        continue
+                    n = _gsc_numbers(r["clicks_current"], r["impressions_current"], r["clicks_previous"],
+                                     r["impressions_previous"], r["position_current"], r["position_previous"])
+                    p, w = classify(n["clicks_pct"], n["impressions_pct"], n["ctr_change_pct"], n["position_change"])
+                    pages.append({"page": r["page"], "pattern": p, **n})
+                return pages
+            res["top_declining_pages"] = page_rows(m.sort_values("delta").head(5), lambda x: x < 0)
+            res["top_gaining_pages"] = page_rows(m.sort_values("delta", ascending=False).head(5), lambda x: x > 0)
 
         if brand_terms and "query" in pairs:
             m = pairs["query"].copy()
@@ -478,11 +493,19 @@ def load_updates(path: Path) -> tuple[list[dict], dict]:
     return out, meta
 
 
+def _days_from_event(d: date, s: date, e: date) -> int:
+    """0 if the change point falls inside the event; otherwise days after the end (+) or before the start (-)."""
+    if s <= d <= e:
+        return 0
+    return (d - e).days if d > e else (d - s).days
+
+
 def q5_when(focus: dict, periods: dict[str, Period], events: list[dict], updates: list[dict], updates_meta: dict,
-            match_days: int, gap_days: dict) -> dict:
+            match_days: int, gap_days: dict, lag_days: int | None = None) -> dict:
     t = THRESHOLDS
+    lag_days = t["event_lag_days"] if lag_days is None else lag_days
     cp = change_point(focus["series"], periods["current"].end, t["changepoint_window_days"], t["changepoint_min_segment"])
-    res = {"change_point": cp, "matches": [], "match_window_days": match_days}
+    res = {"change_point": cp, "matches": [], "match_window_days": match_days, "event_lag_days": lag_days}
     if not cp:
         res["note"] = "Not enough daily data to find when the trend shifted."
         return res
@@ -492,9 +515,17 @@ def q5_when(focus: dict, periods: dict[str, Period], events: list[dict], updates
             s, e = date.fromisoformat(ev["start"]), date.fromisoformat(ev["end"])
         except ValueError:
             continue
-        if s - timedelta(days=match_days) <= d <= e + timedelta(days=match_days):
-            res["matches"].append(ev | {"days_from_change_point": (d - s).days,
-                                        "relation": "coincides with"})
+        gap = _days_from_event(d, s, e)
+        if abs(gap) <= match_days:
+            relation = "coincides with"
+        elif ev["source"] == "your event log" and 0 < gap <= lag_days:
+            # Site changes often take days or weeks to show in search, so look further back for them.
+            relation = "follows"
+        else:
+            continue
+        res["matches"].append(ev | {"days_from_change_point": gap, "relation": relation})
+    if cp["strength"] == "weak" and res["matches"]:
+        res["weak_shift_note"] = ("The trend shift is weak, so matching it to events is less reliable than usual.")
     last = updates_meta.get("last_updated")
     res["update_list_last_updated"] = last
     if last and d > date.fromisoformat(last):
@@ -520,8 +551,12 @@ def q6_next_checks(q1, q2, q3, q4, q5) -> list[dict]:
             continue
         if c["id"].endswith("near_zero_days") or c["id"] == "ga4_all_channels_dropped":
             days = ", ".join(x["date"] for x in c.get("days", [])[:5])
-            add(f"Check tracking on {days}: tag deployments, consent banner changes, site outages.",
-                c["message"], "high")
+            system = c["id"].split("_")[0]
+            what = {
+                "gsc": "a known Search Console data issue, site outages, server errors, robots.txt or noindex changes",
+                "gads": "budget caps, billing problems, paused campaigns, disapproved ads",
+            }.get(system, "tag deployments, consent banner changes, site outages")
+            add(f"Check {SYSTEM_LABELS.get(system, 'tracking')} on {days}: {what}.", c["message"], "high")
         elif c["id"].startswith("ratio_"):
             add("Compare GA4 and Search Console setup: consent mode, tag coverage on all templates, redirects that drop tracking.",
                 c["message"], "medium")
@@ -536,6 +571,21 @@ def q6_next_checks(q1, q2, q3, q4, q5) -> list[dict]:
         target = ", ".join(pages) if pages else "the pages losing the most clicks"
         add(f"Look at ranking changes for {target}: compare them with the pages now ranking above them, and check indexing and canonical tags.",
             "Average position got worse for the pages driving the decline.", "high" if pages else "medium")
+    gaining = short_labels([p["page"] for p in q4.get("top_gaining_pages", []) if p["pattern"] == "ranking_gain"][:3])
+    if pattern == "ranking_gain":
+        target = ", ".join(gaining) if gaining else "the pages gaining the most clicks"
+        add(f"Find what changed on {target} before the gain (content, internal links, technical fixes) and decide "
+            "whether to repeat it on similar pages.",
+            "Average position improved for the pages driving the gain.", "high" if gaining else "medium")
+        add("Recheck in 2 to 4 weeks before reporting the gain as lasting.",
+            "Ranking gains can settle back after a few weeks.", "low")
+    if pattern == "higher_demand_or_visibility":
+        conf = "low" if q2.get("matches_last_year_pattern") else "medium"
+        add("Compare with last year and with search interest for the main queries to see if demand rose.",
+            site.get("explanation", ""), conf)
+    for c in q3.get("stopped_ads_campaigns", [])[:3]:
+        add(f"Confirm whether the Google Ads campaign '{c['campaign']}' was paused, ran out of budget or ended.",
+            f"It has had no clicks since {c['last_day_with_clicks']} ({c['days_without_clicks']} days).", "high")
     if pattern == "serp_change":
         add("Search the top losing queries yourself and note what now appears above the site's result (ads, AI answers, other features).",
             site.get("explanation", ""), "medium")
@@ -547,10 +597,19 @@ def q6_next_checks(q1, q2, q3, q4, q5) -> list[dict]:
     if brand.get("pattern") == "brand_demand":
         add("Check what changed in brand marketing: campaigns paused, PR, offline activity, reviews.", brand["explanation"], "medium")
 
+    cp = q5.get("change_point") or {}
+    rising = (cp.get("shift_pct") or 0) > 0
+    weak = cp.get("strength") == "weak"
     for m in q5.get("matches", []):
+        timing = (f"The trend shift {m['relation']} this event" +
+                  (f" ({m['days_from_change_point']} days later)." if m["relation"] == "follows" else "."))
         if m["source"] == "your event log":
-            add(f"Review what the '{m['name']}' change ({m['start']}) did to the affected pages: templates, titles, internal links, canonical and noindex tags, redirects.",
-                f"The trend shift {m['relation']} this event.", "medium")
+            if rising:
+                add(f"Note what the '{m['name']}' change ({m['start']}) did to the pages that gained, so it can be repeated elsewhere.",
+                    timing + " Timing alone does not prove it caused the change.", "low" if weak else "medium")
+            else:
+                add(f"Review what the '{m['name']}' change ({m['start']}) did to the affected pages: templates, titles, internal links, canonical and noindex tags, redirects.",
+                    timing + " Timing alone does not prove it caused the change.", "low" if weak else "medium")
         else:
             add(f"Read Google's guidance for the {m['name']} and review the affected pages against it.",
                 f"The trend shift {m['relation']} this update. Timing alone does not prove it caused the change.", "low")
