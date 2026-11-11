@@ -430,6 +430,12 @@ def q4_what_kind(ds: Dataset, periods: dict[str, Period], q3: dict, brand_terms:
                     out["pattern"], out["explanation"] = "non_brand", "Non-branded searches fell while branded held. That points to SEO visibility, not brand demand."
                 elif b <= -t and nb <= -t:
                     out["pattern"], out["explanation"] = "both", "Both branded and non-branded searches fell."
+                elif nb >= t and b < t:
+                    out["pattern"], out["explanation"] = "non_brand_gain", "Non-branded searches rose while branded did not. That points to better SEO visibility, not brand demand."
+                elif b >= t and nb < t:
+                    out["pattern"], out["explanation"] = "brand_demand_gain", "Only branded searches rose. That points to brand demand, such as marketing or PR, not SEO."
+                elif b >= t and nb >= t:
+                    out["pattern"], out["explanation"] = "both_gain", "Both branded and non-branded searches rose."
                 else:
                     out["pattern"], out["explanation"] = "no_clear_split", "Neither branded nor non-branded searches stand out."
             out["brand_terms"] = terms
@@ -594,6 +600,9 @@ def q6_next_checks(q1, q2, q3, q4, q5) -> list[dict]:
         add("Compare with last year and with search interest for the main queries to see if demand dropped.",
             site.get("explanation", ""), conf)
     brand = q4.get("brand_split", {})
+    if brand.get("pattern") == "brand_demand_gain":
+        add("Check what brand marketing ran in the current period (campaigns, PR, offline activity) so it can be credited.",
+            brand["explanation"], "medium")
     if brand.get("pattern") == "brand_demand":
         add("Check what changed in brand marketing: campaigns paused, PR, offline activity, reviews.", brand["explanation"], "medium")
 

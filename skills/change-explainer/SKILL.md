@@ -111,7 +111,8 @@ Want the client-ready report?
 
 ## Known limits
 
-- Export formats come from commonly seen layouts and were tested on synthetic data. Anything the
+- Export formats come from commonly seen layouts and were tested on synthetic data plus one real
+  Search Console export. GA4 and Google Ads are not yet tested on real exports. Anything the
   loader can't read is listed in `data_health`; tell the user which file and why.
 - Thresholds (in `findings.json` under `thresholds`) are rules of thumb, not industry standards.
 - The trend-shift finder looks for the single biggest shift in the last 120 days. Gradual declines

@@ -195,13 +195,16 @@ def build(findings: dict, narr: dict, base: Path) -> str:
         parts.append(img(base, findings, f"where_{name_key}"))
         metric = "clicks" if key.startswith("gsc") else "sessions"
         rows = []
-        top = b["top_declines"][:5]
+        rising = (b.get("net_change") or 0) > 0
+        top = (b.get("top_gains") if rising else b.get("top_declines")) or []
+        top = top[:5]
         shown = short_labels([r[name_key] for r in top]) if name_key == "page" else [r[name_key] for r in top]
         for r, shown_name in zip(top, shown):
             rows.append(f"<tr><td>{esc(shown_name)}</td><td class='n'>{num(r[f'{metric}_previous'])}</td>"
                         f"<td class='n'>{num(r[f'{metric}_current'])}</td>{delta_cell(r.get('change_pct'))}"
                         f"<td class='n'>{num(r.get('share_of_net_change_pct'), 1, True)}</td></tr>")
         if rows:
+            parts.append(f'<p class="note">Biggest {"gains" if rising else "declines"}.</p>')
             parts.append(table([(single, False), ("Previous", True), ("Current", True),
                                 ("Change", True), ("Share of net change", True)], rows))
     for u in q3.get("unavailable", []):
@@ -226,9 +229,11 @@ def build(findings: dict, narr: dict, base: Path) -> str:
         parts.append(table([("Search Console, whole site", False), ("Previous", True), ("Current", True), ("Change", True)], rows))
         split = site.get("click_change_split")
         if split:
+            imp_word = "more" if (split["from_impressions_change"] or 0) >= 0 else "fewer"
+            ctr_word = "a higher" if (split["from_ctr_change"] or 0) >= 0 else "a lower"
             parts.append(f'<p class="note">Of the {num(split["total_change"], signed=True)} change in clicks, about '
-                         f'{num(split["from_impressions_change"], signed=True)} comes from fewer or more impressions and '
-                         f'{num(split["from_ctr_change"], signed=True)} from a lower or higher click-through rate.</p>')
+                         f'{num(split["from_impressions_change"], signed=True)} comes from {imp_word} impressions and '
+                         f'{num(split["from_ctr_change"], signed=True)} from {ctr_word} click-through rate.</p>')
     bs = q4.get("brand_split", {})
     if "branded" in bs:
         parts.append("<h3>Branded and non-branded searches</h3>")
