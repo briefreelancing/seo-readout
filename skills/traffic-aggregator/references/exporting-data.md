@@ -13,7 +13,9 @@ Readout reads exports exactly as downloaded. Don't rename columns or edit the fi
 1. Open **Performance > Search results**.
 2. Set the **Date** filter. Keep search type as **Web**.
 3. Click **Export > Download CSV**. You get a zip with tables for dates, queries, pages,
-   countries, devices and filters.
+   countries, devices and filters. In a real export checked in November 2026, the daily table
+   was named `Chart.csv` and the search type read "Web (text-based)". Readout accepts that
+   naming as well as `Dates.csv`. You can upload the zip or the CSVs inside it.
 
 **For the change explainer, export three zips:**
 
@@ -26,6 +28,8 @@ Readout reads exports exactly as downloaded. Don't rename columns or edit the fi
 Upload all three together. Overlapping dates are counted once.
 
 Notes:
+- A single 16-month export is enough for the trend, the year-ago comparison and when the shift
+  started. Page and query breakdowns need the separate current and previous period exports.
 - Search Console lists a limited number of rows per table and hides some rare queries for
   privacy, so query totals are lower than site totals. Readout reports that gap.
 - Exports made with the **Compare** option turned on are supported on a best-effort basis.

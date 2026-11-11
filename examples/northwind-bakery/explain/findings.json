@@ -1,7 +1,7 @@
 {
   "tool": "readout-change-explainer",
   "client": "Northwind Bakery",
-  "generated": "2026-11-01",
+  "generated": "2026-11-11",
   "focus_metric": {
     "id": "gsc_clicks",
     "label": "Search Console clicks",
@@ -42,42 +42,6 @@
     },
     {
       "file": "Dates.csv",
-      "bundle": "gsc_last_16_months.zip",
-      "detected_as": "Search Console (dates)",
-      "rows": 482
-    },
-    {
-      "file": "Queries.csv",
-      "bundle": "gsc_last_16_months.zip",
-      "detected_as": "Search Console (query)",
-      "rows": 12
-    },
-    {
-      "file": "Pages.csv",
-      "bundle": "gsc_last_16_months.zip",
-      "detected_as": "Search Console (page)",
-      "rows": 8
-    },
-    {
-      "file": "Countries.csv",
-      "bundle": "gsc_last_16_months.zip",
-      "detected_as": "Search Console (country)",
-      "rows": 4
-    },
-    {
-      "file": "Devices.csv",
-      "bundle": "gsc_last_16_months.zip",
-      "detected_as": "Search Console (device)",
-      "rows": 3
-    },
-    {
-      "file": "Search appearance.csv",
-      "bundle": "gsc_last_16_months.zip",
-      "detected_as": "Search Console (search_appearance)",
-      "rows": 0
-    },
-    {
-      "file": "Dates.csv",
       "bundle": "gsc_current_28_days.zip",
       "detected_as": "Search Console (dates)",
       "rows": 28
@@ -109,6 +73,42 @@
     {
       "file": "Search appearance.csv",
       "bundle": "gsc_current_28_days.zip",
+      "detected_as": "Search Console (search_appearance)",
+      "rows": 0
+    },
+    {
+      "file": "Dates.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (dates)",
+      "rows": 482
+    },
+    {
+      "file": "Queries.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (query)",
+      "rows": 12
+    },
+    {
+      "file": "Pages.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (page)",
+      "rows": 8
+    },
+    {
+      "file": "Countries.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (country)",
+      "rows": 4
+    },
+    {
+      "file": "Devices.csv",
+      "bundle": "gsc_last_16_months.zip",
+      "detected_as": "Search Console (device)",
+      "rows": 3
+    },
+    {
+      "file": "Search appearance.csv",
+      "bundle": "gsc_last_16_months.zip",
       "detected_as": "Search Console (search_appearance)",
       "rows": 0
     },
@@ -165,6 +165,12 @@
       "check": "time_zones",
       "status": "info",
       "message": "Search Console reports dates in Pacific Time. GA4 and Google Ads use each account's own time zone, so single days can differ slightly between sources.",
+      "details": {}
+    },
+    {
+      "check": "file_note",
+      "status": "info",
+      "message": "events.csv: Looks like an event log; pass it with --events instead of as data.",
       "details": {}
     },
     {
@@ -933,6 +939,7 @@
         "position_change": 0.0
       }
     ],
+    "top_gaining_pages": [],
     "brand_split": {
       "branded": {
         "queries": 3,
@@ -988,16 +995,17 @@
         "name": "September 2026 spam update",
         "source": "Google update list",
         "url": "https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history",
-        "days_from_change_point": 12,
+        "days_from_change_point": 0,
         "relation": "coincides with"
       }
     ],
     "match_window_days": 3,
+    "event_lag_days": 14,
     "update_list_last_updated": "2026-10-31"
   },
   "q6_next_checks": [
     {
-      "check": "Check tracking on 2026-10-12: tag deployments, consent banner changes, site outages.",
+      "check": "Check GA4 on 2026-10-12: tag deployments, consent banner changes, site outages.",
       "why": "GA4 has 1 day(s) far below normal in the analysis window. Every GA4 channel dropped on the same day, which usually points to tracking rather than real demand.",
       "confidence": "high"
     },
@@ -1008,7 +1016,7 @@
     },
     {
       "check": "Review what the 'Site redesign launched (new blog template)' change (2026-10-05) did to the affected pages: templates, titles, internal links, canonical and noindex tags, redirects.",
-      "why": "The trend shift coincides with this event.",
+      "why": "The trend shift coincides with this event. Timing alone does not prove it caused the change.",
       "confidence": "medium"
     },
     {
@@ -1021,7 +1029,7 @@
     "brand_terms": [
       "northwind"
     ],
-    "events_file": "../../sample-data/events.csv",
+    "events_file": "../../sample-data/northwind-bakery/events.csv",
     "events_count": 3,
     "google_update_list": {
       "last_updated": "2026-10-31",
@@ -1033,6 +1041,7 @@
   },
   "thresholds": {
     "near_zero_share": 0.1,
+    "event_lag_days": 14,
     "sync_drop_share": 0.5,
     "sync_drop_channels": 0.8,
     "ratio_shift_pct": 15.0,

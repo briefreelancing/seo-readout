@@ -27,7 +27,7 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "sample-data"
+OUT = ROOT / "sample-data" / "northwind-bakery"
 rng = np.random.default_rng(42)
 
 START = date(2025, 7, 1)

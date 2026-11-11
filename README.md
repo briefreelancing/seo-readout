@@ -62,17 +62,22 @@ The scripts run on their own:
 
 ```bash
 pip install -r requirements.txt
-python skills/traffic-aggregator/scripts/aggregate.py sample-data/*.csv sample-data/gsc_last_16_months.zip --out out/aggregate
-python skills/change-explainer/scripts/explain.py sample-data/*.csv sample-data/*.zip \
-  --events sample-data/events.csv --brand-terms "northwind" --out out/explain
+python skills/traffic-aggregator/scripts/aggregate.py sample-data/northwind-bakery --out out/aggregate
+python skills/change-explainer/scripts/explain.py sample-data/northwind-bakery \
+  --events sample-data/northwind-bakery/events.csv --brand-terms "northwind" --out out/explain
 ```
 
 You get all the numbers and charts. The written explanation is the part Claude adds.
 
 ## Try it with the sample data
 
-`sample-data/` holds synthetic exports for a fictional bakery, with a story built in: three
-blog posts lose rankings the day after a site redesign, and GA4 tracking breaks for one day.
+`sample-data/` holds synthetic exports for two fictional clients, each with a story built in:
+
+- `northwind-bakery/`: three blog posts lose rankings the day after a site redesign, and GA4
+  tracking breaks for one day.
+- `lakeview-plumbing/`: service pages gain rankings a few days after a content refresh, and a
+  Google Ads campaign is paused.
+
 The finished outputs are in [`examples/northwind-bakery/`](examples/northwind-bakery/),
 including the [client report](examples/northwind-bakery/explain/report.html).
 
@@ -94,7 +99,8 @@ Design choices:
   clicks, GA4 sessions and Google Ads clicks are shown side by side, with the reasons they differ.
   A sudden change in the gap is flagged as a possible tracking problem.
 - **Tracking is checked before anything is diagnosed.** Near-zero days, every channel dropping
-  at once, and shifts in the GA4 to Search Console ratio are caught first.
+  at once, and shifts in the GA4 to Search Console ratio are caught first. On small sites,
+  ordinary zero-click days are not mistaken for tracking gaps.
 - **"Coincides with", never "caused by".** The trend shift is matched to your own event log and
   to a dated list of Google updates. Timing is reported as timing.
 - **Seasonality is tested, not assumed.** Each change is compared with this site's normal
@@ -109,7 +115,7 @@ readout/
 │   └── change-explainer/     SKILL.md, scripts/, references/ (Google update list), templates/
 ├── shared/readout_core/      source of truth for shared code (copied into each skill)
 ├── docs/                     exporting guide, channel grouping
-├── sample-data/              synthetic exports
+├── sample-data/              synthetic exports for two fictional clients
 ├── examples/                 finished outputs from the sample data
 ├── tools/                    sync shared code, package skills, make sample data
 └── tests/
@@ -120,8 +126,9 @@ Each skill carries its own copy of `readout_core` so it works when uploaded on i
 
 ## Limits
 
-- **Export formats** were built from commonly seen layouts and tested on synthetic files, not yet
-  on a wide range of real accounts. If a file isn't recognized, Readout says which one and why.
+- **Export formats** were built from commonly seen layouts and tested on synthetic files plus one
+  real 16-month Search Console export from a small site. GA4 and Google Ads parsers have not yet
+  been tested on real exports. If a file isn't recognized, Readout says which one and why.
   Issues with anonymized examples are very welcome.
 - Numbers must use US formatting (1,234.56).
 - Thresholds that label patterns ("unusual", "ranking loss") are rules of thumb, listed in
