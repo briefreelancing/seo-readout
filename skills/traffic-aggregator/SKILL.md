@@ -99,7 +99,8 @@ Rules:
 
 ## Known limits
 
-- Export formats were built from commonly seen layouts and tested on synthetic files. Unusual
+- Export formats were built from commonly seen layouts and tested on synthetic files plus one real
+  Search Console export. GA4 and Google Ads are not yet tested on real exports. Unusual
   exports may not be recognized. Anything skipped appears in `health` as a file note; tell the
   user which file and why.
 - Numbers must use US formatting (1,234.56).

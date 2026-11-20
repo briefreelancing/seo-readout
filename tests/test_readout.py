@@ -214,3 +214,12 @@ def test_explainer_gain_story(tmp_path, gain_data):
     assert f["q3_where"]["stopped_ads_campaigns"][0]["campaign"] == "Brand - Search"
     checks = " ".join(c["check"] for c in f["q6_next_checks"])
     assert "before the gain" in checks and "Brand - Search" in checks
+    assert f["q4_what_kind"]["brand_split"]["pattern"] == "non_brand_gain"
+
+    # The client report for a gain lists the gainers, with direction-aware wording.
+    from render_report import build
+    narrative = {"title": "t", "eyebrow": "e", "client": "c", "headline": "h", "summary": ["s"], "sections": {}}
+    html = build(f, narrative, out)
+    assert "Biggest gains" in html and "Biggest declines" not in html
+    assert "water-heater-installation" in html.split("Biggest gains", 1)[1]
+    assert "fewer or more" not in html and "from more impressions" in html
