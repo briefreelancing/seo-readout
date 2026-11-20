@@ -1,3 +1,5 @@
+<img src="docs/images/readout-logo.png" alt="Readout logo" width="110">
+
 # Readout
 
 **Claude skills that turn GA4, Search Console and Google Ads exports into answers a client can read.**
@@ -159,4 +161,4 @@ Run `python -m pytest -q` before opening a pull request.
 
 MIT. See [LICENSE](LICENSE).
 
-Built by BrieFreelancing.
+Built by Brie and Claude.
